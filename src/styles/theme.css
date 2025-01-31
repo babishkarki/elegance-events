@@ -1,0 +1,31 @@
+:root {
+    /* Color Scheme */
+    --primary-color: #D2A679;
+    --secondary-color: #A9865E;
+  --background-color: #FAF7F2;
+    --text-color: #333333;
+    --hover-color: #C09670;
+    --white: #FFFFFF;
+  
+    /* Typography */
+    --font-primary: 'Playfair Display', serif;
+    --font-secondary: 'Montserrat', sans-serif; 
+    
+    /* Spacing */
+    --section-padding: 5rem 0;
+    --container-width: min(1200px, 90%);
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.15);
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+  }
+  
+  @media (max-width: 768px) {
+    :root {
+      --section-padding: 3rem 0;
+    }
+  }
