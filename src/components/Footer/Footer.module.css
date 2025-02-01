@@ -76,3 +76,13 @@
     transform: scale(1.2);
   }
   
+
+  @media (max-width: 768px) {
+    .container{
+      gap: 0rem;
+    }
+
+    .section {
+      padding: 0rem;
+    }
+  }
