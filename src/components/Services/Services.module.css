@@ -1,0 +1,40 @@
+.services {
+    padding: var(--section-padding);
+    min-height: 100vh;
+  }
+  
+  .heading {
+    text-align: center;
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .cta {
+    display: inline-block;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-top: 1rem;
+    text-decoration: none;
+  }

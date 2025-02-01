@@ -1,33 +1,27 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
-import Home from './components/Home/Home';
+import Footer from './components/Footer/Footer';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 
-// Scroll to top on route change
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
-};
-
+const Home = lazy(() => import('./components/Home/Home'));
+const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 function App() {
   return (
     <Router>
       <Navbar />
-      <ScrollToTop />
-      <main className="main-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          {/* Add more routes with the same pattern */}
-          {/* <Route path="/services" element={<Services />} /> */}
-          {/* <Route path="/gallery" element={<Gallery />} /> */}
-          {/* <Route path="/contact" element={<Contact />} /> */}
-        </Routes>
-      </main>
+      <ErrorBoundary>
+        <Suspense fallback={<LoadingSpinner />}>
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+        </Suspense>
+      </ErrorBoundary>
+      <Footer />
     </Router>
   );
 }

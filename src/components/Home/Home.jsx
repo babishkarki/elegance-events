@@ -1,26 +1,114 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Typewriter } from 'react-simple-typewriter';
-import styles from './Home.module.css';
-import '../../styles/theme.css';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaUser, FaEnvelope, FaCommentDots } from "react-icons/fa";
+import { Element as ScrollElement } from "react-scroll";
+import { Typewriter } from "react-simple-typewriter";
+import Lightbox from "../LightBox/LightBox";
+import emailjs from "@emailjs/browser";
+import styles from "./Home.module.css";
+import "../../styles/theme.css";
 
 const services = [
-  { title: "Birthday Decorations", img: "/assets/birthday.png", path: "/services/birthdays" },
-  { title: "Baby & Bridal Showers", img: "/assets/babyshower.png", path: "/services/showers" },
-  { title: "Surprise Proposals", img: "/assets/surprise-proposal.jpg", path: "/services/proposals" },
-  { title: "Mehendi & Haldi Ceremonies", img: "/assets/mehendi.jpg", path: "/services/ceremonies" },
-  { title: "School & College Events", img: "/assets/school-events.jpg", path: "/services/education" }
+  {
+    title: "Birthday Decorations",
+    img: "/assets/birthday.png",
+    path: "/services/birthdays",
+  },
+  {
+    title: "Baby & Bridal Showers",
+    img: "/assets/babyshower.png",
+    path: "/services/showers",
+  },
+  {
+    title: "Surprise Proposals",
+    img: "/assets/surprise-proposal.jpg",
+    path: "/services/proposals",
+  },
+  {
+    title: "Mehendi & Haldi Ceremonies",
+    img: "/assets/mehendi.jpg",
+    path: "/services/ceremonies",
+  },
+  {
+    title: "School & College Events",
+    img: "/assets/school-events.jpg",
+    path: "/services/education",
+  },
 ];
 
+const galleryImages = Array.from({ length: 6 }, (_, i) => ({
+  id: i + 1,
+  src: `/assets/gallery-${i + 1}.jpg`,
+  alt: `Event decoration ${i + 1}`,
+}));
+
 const Home = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [formData, setFormData] = useState({ 
+    name: "", 
+    email: "", 
+    message: "" 
+  });
+  const [isSending, setIsSending] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isSending) return;
+
+    setIsSending(true);
+    setStatusMessage("");
+
+    try {
+      const response = await emailjs.send(
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        {
+          user_name: formData.name,
+          user_email: formData.email,
+          message: formData.message
+        },
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+      );
+
+      if (response.status === 200) {
+        setStatusMessage("Message sent successfully! 🎉");
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setStatusMessage(""), 5000);
+      }
+    } catch (error) {
+      console.error("Email Error:", error);
+      setStatusMessage(
+        error.text || "Failed to send message. Please try again later."
+      );
+      setTimeout(() => setStatusMessage(""), 5000);
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  // Framer Motion variants for animations
   const heroVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' }
-    }
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
+  const sectionVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   const cardVariants = {
@@ -28,81 +116,278 @@ const Home = () => {
     visible: (index) => ({
       opacity: 1,
       y: 0,
-      transition: { 
+      transition: {
         delay: index * 0.15,
         duration: 0.6,
-        ease: 'easeOut'
-      }
-    })
+        ease: "easeOut",
+      },
+    }),
   };
 
   return (
     <div className={styles.homeContainer}>
+      {/* Lightbox for gallery images */}
+      <AnimatePresence>
+        {selectedImage && (
+          <Lightbox
+            image={selectedImage}
+            onClose={() => setSelectedImage(null)}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
-      <motion.section 
-        className={styles.heroSection}
-        initial="hidden"
-        animate="visible"
-        variants={heroVariants}
-      >
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>
-            <Typewriter
-              words={['Creating Moments of Elegance']}
-              typeSpeed={80}
-              deleteSpeed={0}
-              cursor={false}
-            />
-          </h1>
-          <p className={styles.heroSubtitle}>
-            Premium event design and decoration services for life's most precious moments
-          </p>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Link to="/contact" className={styles.heroCta}>
-              Start Planning Your Event →
-            </Link>
-          </motion.div>
-        </div>
-      </motion.section>
+      <ScrollElement name="hero">
+        <motion.section
+          className={styles.heroSection}
+          initial="hidden"
+          animate="visible"
+          variants={heroVariants}
+        >
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroTitle}>
+              <Typewriter
+                words={["Creating Moments of Elegance"]}
+                typeSpeed={80}
+                deleteSpeed={0}
+                cursor={false}
+              />
+            </h1>
+            <p className={styles.heroSubtitle}>
+              Premium event design and decoration services for life's most
+              precious moments
+            </p>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              <ScrollLink to="contact" smooth={true} className={styles.heroCta}>
+                Start Planning Your Event →
+              </ScrollLink>
+            </motion.div>
+          </div>
+        </motion.section>
+      </ScrollElement>
 
       {/* Services Section */}
-      <section className={styles.servicesSection}>
-        <div className={styles.sectionContainer}>
-          <h2 className={styles.sectionTitle}>Our Signature Services</h2>
-          
-          <div className={styles.servicesGrid}>
-            {services.map((service, index) => (
-              <motion.article
-                key={service.title}
-                className={styles.serviceCard}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                custom={index}
+      <ScrollElement name="services">
+        <motion.section
+          className={styles.servicesSection}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+        >
+          <div className={styles.sectionContainer}>
+            <h2 className={styles.sectionTitle}>Our Signature Services</h2>
+            <div className={styles.servicesGrid}>
+              {services.map((service, index) => (
+                <motion.article
+                  key={service.title}
+                  className={styles.serviceCard}
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
+                  custom={index}
+                >
+                  <div className={styles.cardImage}>
+                    <img
+                      src={process.env.PUBLIC_URL + service.img}
+                      alt={service.title}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className={styles.cardContent}>
+                    <h3>{service.title}</h3>
+                    <Link to={service.path} className={styles.cardCta}>
+                      Explore Service
+                    </Link>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+      </ScrollElement>
+
+      {/* Gallery Section */}
+      <ScrollElement name="gallery">
+        <motion.section
+          className={styles.gallerySection}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+        >
+          <div className={styles.sectionContainer}>
+            <h2 className={styles.sectionTitle}>Our Recent Work</h2>
+            <div className={styles.galleryGrid}>
+              {galleryImages.map((image, index) => (
+                <motion.div
+                  key={image.id}
+                  className={styles.galleryItem}
+                  onClick={() => setSelectedImage(image)}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                      scale: 0.8,
+                      rotate: -5,
+                    },
+                    visible: {
+                      opacity: 1,
+                      scale: 1,
+                      rotate: 0,
+                      transition: {
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 15,
+                        delay: index * 0.1,
+                      },
+                    },
+                  }}
+                  whileHover={{
+                    scale: 1.05,
+                    rotate: Math.random() * 4 - 2,
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.2)",
+                    transition: { duration: 0.3 },
+                  }}
+                >
+                  <div className={styles.imageContainer}>
+                    <img
+                      src={process.env.PUBLIC_URL + image.src}
+                      alt={image.alt}
+                      loading="lazy"
+                    />
+                    <motion.div
+                      className={styles.imageOverlay}
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                    >
+                      <motion.span initial={{ y: 20 }} whileHover={{ y: 0 }}>
+                        View Full Size
+                      </motion.span>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+      </ScrollElement>
+
+      {/* Contact Section */}
+      <ScrollElement name="contact">
+        <motion.section
+          className={styles.contactSection}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={sectionVariants}
+        >
+          <div className={styles.sectionContainer}>
+            <h2 className={styles.sectionTitle}>Get In Touch</h2>
+            <div className={styles.contactContent}>
+              <motion.form
+                className={styles.contactForm}
+                onSubmit={handleSubmit}
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
               >
-                <div className={styles.cardImage}>
-                  <img
-                    src={process.env.PUBLIC_URL + service.img}
-                    alt={service.title}
-                    loading="lazy"
+                <div className={styles.formGroup}>
+                  <FaUser className={styles.inputIcon} />
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
-                <div className={styles.cardContent}>
-                  <h3>{service.title}</h3>
-                  <Link to={service.path} className={styles.cardCta}>
-                    Explore Service
-                  </Link>
+                <div className={styles.formGroup}>
+                  <FaEnvelope className={styles.inputIcon} />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
-              </motion.article>
-            ))}
+                <div className={styles.messageGroup}>
+                  <FaCommentDots className={styles.messageIcon} />
+                  <textarea
+                    name="message"
+                    placeholder="Your Message"
+                    rows="5"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  disabled={isSending}
+                  className={styles.submitButton}
+                >
+                  {isSending ? (
+                    <div className={styles.spinner}></div>
+                  ) : (
+                    "Send Message"
+                  )}
+                </motion.button>
+
+                {statusMessage && (
+                  <p className={styles.statusMessage}>{statusMessage}</p>
+                )}
+              </motion.form>
+
+
+              <motion.div
+                className={styles.contactInfo}
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <h3>Contact Information</h3>
+                <p>
+                  We'd love to hear from you! Whether you have a question about
+                  our services, pricing, or anything else, our team is ready to
+                  answer all your questions.
+                </p>
+                <p>
+                  Email:{" "}
+                  <a href="mailto:contact@eleganceevents.com">
+                    contact@eleganceevents.com
+                  </a>
+                </p>
+                <p>
+                  Phone:{" "}
+                  <a href="tel:+977-9849064803">+977-9849064803</a> /{" "}
+                  <a href="tel:+977-9803415465">+977-9803415465</a>
+                </p>
+              </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
+        </motion.section>
+      </ScrollElement>
+
+      {/* Back To Top Link */}
+      <div className={styles.backToTop}>
+        <ScrollLink to="hero" smooth={true}>
+          ↑ Back to Top
+        </ScrollLink>
+      </div>
     </div>
   );
 };

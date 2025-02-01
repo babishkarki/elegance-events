@@ -70,17 +70,18 @@
   color: var(--text-color);
   text-decoration: none;
   padding: 0.5rem 1rem;
-  border-radius: 4px;
   transition: color var(--transition-normal),
               background-color var(--transition-normal);
 }
 
 .navLink:hover,
 .navLink:focus {
+  cursor: pointer;
   color: var(--primary-color);
 }
 
 .ctaButton {
+  cursor: pointer;
   background-color: var(--primary-color);
   color: var(--white);
   padding: 0.75rem 1.5rem;
@@ -160,6 +161,11 @@
   transform: translate(-50%, -50%) rotate(-45deg);
   top: 50%;
   left: 50%;
+}
+
+.navLink.active {
+  color: var(--primary-color) !important;
+  border-bottom: 2px solid var(--primary-color);
 }
 
 @media (max-width: 768px) {
