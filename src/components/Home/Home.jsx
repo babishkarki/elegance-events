@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
@@ -113,6 +113,12 @@ const Home = () => {
   //   return `${hours}h ${minutes}m ${secs}s`;
   // };
 
+  
+  const validatePhone = (phone) => {
+    const re = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
+    return re.test(phone);
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -130,13 +136,14 @@ const Home = () => {
       return;
     }
 
+    if (!validatePhone(formData.phone)) {
+      setStatusMessage("Please enter a valid phone number");
+      setTimeout(() => setStatusMessage(""), 5000);
+      return;
+    }
+
     setIsSending(true);
     setStatusMessage("");
-
-    const validatePhone = (phone) => {
-      const re = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
-      return re.test(phone);
-    };
 
     try {
       const response = await emailjs.send(
