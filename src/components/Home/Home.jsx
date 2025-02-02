@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
+import { Link as ScrollLink, scroller } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaUser, FaEnvelope, FaCommentDots } from "react-icons/fa";
 import { Element as ScrollElement } from "react-scroll";
@@ -29,12 +29,12 @@ const services = [
   {
     title: "Mehendi & Haldi Ceremonies",
     img: "/assets/mehendi.jpg",
-    path: "/services/ceremonies",
+    path: "/services/mehendi",
   },
   {
     title: "School & College Events",
     img: "/assets/school-events.jpg",
-    path: "/services/education",
+    path: "/services/school",
   },
 ];
 
