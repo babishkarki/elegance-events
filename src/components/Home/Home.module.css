@@ -375,6 +375,14 @@
   margin: 5px;
 }
 
+/* In your Home.module.css */
+.flipIcon {
+  top: 30%; /* Centered vertically for inputs */
+  transform: scaleX(-1);
+  display: inline-block; /* Required for transform to work */
+}
+
+
 .submitButton {
   display: flex;
   align-items: center;       

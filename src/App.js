@@ -1,5 +1,5 @@
-import React, { lazy, Suspense } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
@@ -12,10 +12,20 @@ import School from './components/Services/School';
 
 const Home = lazy(() => import('./components/Home/Home'));
 const NotFound = lazy(() => import('./components/NotFound/NotFound'));
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
       <ErrorBoundary>
         <Suspense fallback={<LoadingSpinner />}>

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Link as ScrollLink, scroller } from "react-scroll";
+import { Link as ScrollLink } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaUser, FaEnvelope, FaCommentDots } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaCommentDots, FaPhone } from "react-icons/fa";
 import { Element as ScrollElement } from "react-scroll";
 import { Typewriter } from "react-simple-typewriter";
 import Lightbox from "../LightBox/LightBox";
@@ -46,13 +46,72 @@ const galleryImages = Array.from({ length: 6 }, (_, i) => ({
 
 const Home = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [formData, setFormData] = useState({ 
-    name: "", 
-    email: "", 
-    message: "" 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   });
   const [isSending, setIsSending] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
+  // const [cooldownRemaining, setCooldownRemaining] = useState(0);
+
+  const validateEmail = (email) => {
+    // Basic email format validation
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!re.test(String(email).toLowerCase())) return false;
+
+    // Allowed email providers
+    const allowedDomains = [
+      "gmail.com",
+      "yahoo.com",
+      "outlook.com",
+      "hotmail.com",
+      "icloud.com",
+    ];
+
+    // Extract domain part
+    const domain = email.split("@")[1].toLowerCase();
+
+    // Check if domain is in allowed list or a custom domain (you can modify this logic)
+    return (
+      allowedDomains.includes(domain) ||
+      domain.endsWith(".edu") || // Example: Allow educational institutions
+      domain.endsWith(".gov")
+    ); // Example: Allow government domains
+  };
+
+  // useEffect(() => {
+  //   const lastSubmission = localStorage.getItem("lastSubmissionTime");
+  //   if (lastSubmission) {
+  //     const currentTime = Date.now();
+  //     const timePassed = currentTime - parseInt(lastSubmission, 10);
+  //     const fiveHoursInMs = 5 * 60 * 60 * 1000;
+
+  //     if (timePassed < fiveHoursInMs) {
+  //       const remaining = Math.floor((fiveHoursInMs - timePassed) / 1000);
+  //       setCooldownRemaining(remaining);
+  //     }
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (cooldownRemaining > 0) {
+  //     const timer = setInterval(() => {
+  //       setCooldownRemaining((prev) => prev - 1);
+  //     }, 1000);
+  //     return () => clearInterval(timer);
+  //   } else {
+  //     localStorage.removeItem("lastSubmissionTime");
+  //   }
+  // }, [cooldownRemaining]);
+
+  // const formatCooldown = (seconds) => {
+  //   const hours = Math.floor(seconds / 3600);
+  //   const minutes = Math.floor((seconds % 3600) / 60);
+  //   const secs = seconds % 60;
+  //   return `${hours}h ${minutes}m ${secs}s`;
+  // };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,10 +119,24 @@ const Home = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // if (isSending || cooldownRemaining > 0) return;
     if (isSending) return;
+
+    if (!validateEmail(formData.email)) {
+      setStatusMessage(
+        "Please use a valid email from supported providers (Gmail, Yahoo, Outlook, etc.)"
+      );
+      setTimeout(() => setStatusMessage(""), 5000);
+      return;
+    }
 
     setIsSending(true);
     setStatusMessage("");
+
+    const validatePhone = (phone) => {
+      const re = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
+      return re.test(phone);
+    };
 
     try {
       const response = await emailjs.send(
@@ -72,14 +145,17 @@ const Home = () => {
         {
           user_name: formData.name,
           user_email: formData.email,
-          message: formData.message
+          phone: formData.phone,
+          message: formData.message,
         },
         process.env.REACT_APP_EMAILJS_PUBLIC_KEY
       );
 
       if (response.status === 200) {
+        // localStorage.setItem("lastSubmissionTime", Date.now());
+        // setCooldownRemaining(5 * 60 * 60); // 5 hours in seconds
         setStatusMessage("Message sent successfully! 🎉");
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", message: "" });
         setTimeout(() => setStatusMessage(""), 5000);
       }
     } catch (error) {
@@ -321,6 +397,19 @@ const Home = () => {
                     required
                   />
                 </div>
+
+                <div className={styles.formGroup}>
+                <FaPhone className={`${styles.inputIcon} ${styles.flipIcon}`} />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Your Phone Number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    pattern="[0-9]{10}"
+                    required
+                  />
+                </div>
                 <div className={styles.messageGroup}>
                   <FaCommentDots className={styles.messageIcon} />
                   <textarea
@@ -338,6 +427,7 @@ const Home = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   disabled={isSending}
+                  // disabled={isSending || cooldownRemaining > 0}
                   className={styles.submitButton}
                 >
                   {isSending ? (
@@ -345,13 +435,24 @@ const Home = () => {
                   ) : (
                     "Send Message"
                   )}
+                  {/* 
+                    : cooldownRemaining > 0 ? (
+                    `Resend in ${formatCooldown(cooldownRemaining)}`
+                  ) */}
                 </motion.button>
 
                 {statusMessage && (
-                  <p className={styles.statusMessage}>{statusMessage}</p>
+                  <p className={styles.statusMessage}>
+                    {statusMessage.includes("supported providers") ? (
+                      <span style={{ color: "#ff4444" }}>
+                        ⚠️ {statusMessage}
+                      </span>
+                    ) : (
+                      statusMessage
+                    )}
+                  </p>
                 )}
               </motion.form>
-
 
               <motion.div
                 className={styles.contactInfo}
@@ -372,8 +473,7 @@ const Home = () => {
                   </a>
                 </p>
                 <p>
-                  Phone:{" "}
-                  <a href="tel:+977-9849064803">+977-9849064803</a> /{" "}
+                  Phone: <a href="tel:+977-9849064803">+977-9849064803</a> /{" "}
                   <a href="tel:+977-9803415465">+977-9803415465</a>
                 </p>
               </motion.div>
