@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/elegance-events/static/css/main.35adb4af.css",
-    "main.js": "/elegance-events/static/js/main.809ea146.js",
-    "static/css/948.1b58d234.chunk.css": "/elegance-events/static/css/948.1b58d234.chunk.css",
-    "static/js/948.bcabda3b.chunk.js": "/elegance-events/static/js/948.bcabda3b.chunk.js",
+    "main.css": "/elegance-events/static/css/main.4c777773.css",
+    "main.js": "/elegance-events/static/js/main.7e1a7102.js",
+    "static/css/152.29dee38d.chunk.css": "/elegance-events/static/css/152.29dee38d.chunk.css",
+    "static/js/152.59344a39.chunk.js": "/elegance-events/static/js/152.59344a39.chunk.js",
     "static/css/923.ff78c535.chunk.css": "/elegance-events/static/css/923.ff78c535.chunk.css",
     "static/js/923.f534458e.chunk.js": "/elegance-events/static/js/923.f534458e.chunk.js",
     "static/js/488.6247d562.chunk.js": "/elegance-events/static/js/488.6247d562.chunk.js",
-    "static/media/hero-image.jpg": "/elegance-events/static/media/hero-image.f5d65e95649e6a38bc86.jpg",
+    "static/media/bg.jpg": "/elegance-events/static/media/bg.5e5d88fdd2426b1283e1.jpg",
     "index.html": "/elegance-events/index.html",
-    "main.35adb4af.css.map": "/elegance-events/static/css/main.35adb4af.css.map",
-    "main.809ea146.js.map": "/elegance-events/static/js/main.809ea146.js.map",
-    "948.1b58d234.chunk.css.map": "/elegance-events/static/css/948.1b58d234.chunk.css.map",
-    "948.bcabda3b.chunk.js.map": "/elegance-events/static/js/948.bcabda3b.chunk.js.map",
+    "main.4c777773.css.map": "/elegance-events/static/css/main.4c777773.css.map",
+    "main.7e1a7102.js.map": "/elegance-events/static/js/main.7e1a7102.js.map",
+    "152.29dee38d.chunk.css.map": "/elegance-events/static/css/152.29dee38d.chunk.css.map",
+    "152.59344a39.chunk.js.map": "/elegance-events/static/js/152.59344a39.chunk.js.map",
     "923.ff78c535.chunk.css.map": "/elegance-events/static/css/923.ff78c535.chunk.css.map",
     "923.f534458e.chunk.js.map": "/elegance-events/static/js/923.f534458e.chunk.js.map",
     "488.6247d562.chunk.js.map": "/elegance-events/static/js/488.6247d562.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.35adb4af.css",
-    "static/js/main.809ea146.js"
+    "static/css/main.4c777773.css",
+    "static/js/main.7e1a7102.js"
   ]
 }
