@@ -5,8 +5,8 @@
 /* Hero Section */
 .heroSection {
   min-height: calc(100vh - 72px);
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url('../../../public/assets/hero-image.jpg') center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url('../../../public/assets/bg.jpg') center/cover no-repeat;
   display: grid;
   place-items: center;
   padding: 2rem;
@@ -19,8 +19,8 @@
 }
 
 .heroTitle {
-  color: var(--primary-color);
-  font-family: var(--font-primary);
+  color: white;
+  font-family: var(--font-title);
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   line-height: 1.2;
   margin-bottom: 1.5rem;
@@ -36,6 +36,7 @@
 }
 
 .heroCta {
+  cursor: pointer;
   display: inline-block;
   background-color: var(--primary-color);
   color: var(--white);
@@ -105,7 +106,7 @@
 }
 
 .cardContent h3 {
-  font-family: var(--font-primary);
+  font-family: var(--font-title);
   font-size: 1.4rem;
   margin-bottom: 1.5rem;
   margin-top: 0;
@@ -116,10 +117,10 @@
   display: inline-block;
   color: var(--primary-color);
   font-family: var(--font-secondary);
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  border: 2px solid var(--primary-color);
+  border: 3px solid var(--primary-color);
   border-radius: 4px;
   transition: 
     background-color var(--transition-normal),
@@ -257,6 +258,7 @@
 /* Adjust input & textarea styles */
 .formGroup input {
   width: 100%;
+  font-family: var(--font-primary);
   padding: 1rem 1rem 1rem 3rem; /* Adjusted padding for icons */
   border: 2px solid #eee;
   border-radius: 6px;
@@ -287,6 +289,7 @@
 /* Textarea Styling */
 .messageGroup textarea {
   width: 100%;
+  font-family: var(--font-primary);
   padding: 0.5rem 1rem 1rem 3rem; /* Top padding increased for icon */
   border: 2px solid #eee;
   border-radius: 6px;
@@ -314,7 +317,7 @@
 }
 
 .contactForm button:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--hover-color);
   transform: scale(1.05);
 }
 
@@ -322,6 +325,7 @@
 .contactInfo {
   background-color: var(--background-color);
   padding: 2rem;
+  font-family: var(--font-primary);
   border-radius: 8px;
 }
 

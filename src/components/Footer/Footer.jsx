@@ -8,10 +8,16 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.section}>
-          <h3>Elegance Events</h3>
-          <p>Creating unforgettable experiences since 2023</p>
+          {/* Replace text with image */}
+          <img 
+            src={`${process.env.PUBLIC_URL}/assets/logo.jpeg`} 
+            alt="Elegance Events Logo"
+            className={styles.logo}
+          />
+           <p>Creating unforgettable experiences since 2023</p>
         </div>
         
+        {/* Rest of the footer remains the same */}
         <div className={styles.section}>
           <h4>Quick Links</h4>
           <ul>
@@ -39,7 +45,6 @@ const Footer = () => {
           <p>Phone: +977-9849064803/ +977-9803415465</p>
         </div>
 
-        {/* Social Media Section */}
         <div className={styles.section}>
           <h4>Follow Us</h4>
           <div className={styles.socialIcons}>

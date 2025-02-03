@@ -8,6 +8,7 @@ import { Typewriter } from "react-simple-typewriter";
 import Lightbox from "../LightBox/LightBox";
 import emailjs from "@emailjs/browser";
 import styles from "./Home.module.css";
+import MessageModal from "../MessageModal/MessageModal";
 import "../../styles/theme.css";
 
 const services = [
@@ -32,7 +33,7 @@ const services = [
     path: "/services/mehendi",
   },
   {
-    title: "School & College Events",
+    title: "Coroprate Events",
     img: "/assets/school-events.jpg",
     path: "/services/school",
   },
@@ -45,6 +46,11 @@ const galleryImages = Array.from({ length: 6 }, (_, i) => ({
 }));
 
 const Home = () => {
+  const [statusModal, setStatusModal] = useState({
+    show: false,
+    type: "", // 'success' or 'error'
+    message: "",
+  });
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -53,8 +59,6 @@ const Home = () => {
     message: "",
   });
   const [isSending, setIsSending] = useState(false);
-  const [statusMessage, setStatusMessage] = useState("");
-  // const [cooldownRemaining, setCooldownRemaining] = useState(0);
 
   const validateEmail = (email) => {
     // Basic email format validation
@@ -81,39 +85,6 @@ const Home = () => {
     ); // Example: Allow government domains
   };
 
-  // useEffect(() => {
-  //   const lastSubmission = localStorage.getItem("lastSubmissionTime");
-  //   if (lastSubmission) {
-  //     const currentTime = Date.now();
-  //     const timePassed = currentTime - parseInt(lastSubmission, 10);
-  //     const fiveHoursInMs = 5 * 60 * 60 * 1000;
-
-  //     if (timePassed < fiveHoursInMs) {
-  //       const remaining = Math.floor((fiveHoursInMs - timePassed) / 1000);
-  //       setCooldownRemaining(remaining);
-  //     }
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (cooldownRemaining > 0) {
-  //     const timer = setInterval(() => {
-  //       setCooldownRemaining((prev) => prev - 1);
-  //     }, 1000);
-  //     return () => clearInterval(timer);
-  //   } else {
-  //     localStorage.removeItem("lastSubmissionTime");
-  //   }
-  // }, [cooldownRemaining]);
-
-  // const formatCooldown = (seconds) => {
-  //   const hours = Math.floor(seconds / 3600);
-  //   const minutes = Math.floor((seconds % 3600) / 60);
-  //   const secs = seconds % 60;
-  //   return `${hours}h ${minutes}m ${secs}s`;
-  // };
-
-  
   const validatePhone = (phone) => {
     const re = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
     return re.test(phone);
@@ -125,25 +96,28 @@ const Home = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (isSending || cooldownRemaining > 0) return;
     if (isSending) return;
 
     if (!validateEmail(formData.email)) {
-      setStatusMessage(
-        "Please use a valid email from supported providers (Gmail, Yahoo, Outlook, etc.)"
-      );
-      setTimeout(() => setStatusMessage(""), 5000);
+      setStatusModal({
+        show: true,
+        type: "error",
+        message:
+          "Please use a valid email from supported providers (Gmail, Yahoo, Outlook, etc.)",
+      });
       return;
     }
 
     if (!validatePhone(formData.phone)) {
-      setStatusMessage("Please enter a valid phone number");
-      setTimeout(() => setStatusMessage(""), 5000);
+      setStatusModal({
+        show: true,
+        type: "error",
+        message: "Please enter a valid phone number",
+      });
       return;
     }
 
     setIsSending(true);
-    setStatusMessage("");
 
     try {
       const response = await emailjs.send(
@@ -159,18 +133,21 @@ const Home = () => {
       );
 
       if (response.status === 200) {
-        // localStorage.setItem("lastSubmissionTime", Date.now());
-        // setCooldownRemaining(5 * 60 * 60); // 5 hours in seconds
-        setStatusMessage("Message sent successfully! 🎉");
+        setStatusModal({
+          show: true,
+          type: "success",
+          message:
+            "Message received successfully. Thank you for contacting Elegance Events.",
+        });
         setFormData({ name: "", email: "", phone: "", message: "" });
-        setTimeout(() => setStatusMessage(""), 5000);
       }
     } catch (error) {
-      console.error("Email Error:", error);
-      setStatusMessage(
-        error.text || "Failed to send message. Please try again later."
-      );
-      setTimeout(() => setStatusMessage(""), 5000);
+      setStatusModal({
+        show: true,
+        type: "error",
+        message:
+          error.text || "Failed to send message. Please try again later.",
+      });
     } finally {
       setIsSending(false);
     }
@@ -219,6 +196,17 @@ const Home = () => {
         )}
       </AnimatePresence>
 
+      {/* Add Message Modal Here */}
+      <AnimatePresence>
+        {statusModal.show && (
+          <MessageModal
+            type={statusModal.type}
+            message={statusModal.message}
+            onClose={() => setStatusModal({ ...statusModal, show: false })}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
       <ScrollElement name="hero">
         <motion.section
@@ -236,14 +224,19 @@ const Home = () => {
                 cursor={false}
               />
             </h1>
-            <p className={styles.heroSubtitle}>
+            <motion.p
+              className={styles.heroSubtitle}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+            >
               Premium event design and decoration services for life's most
               precious moments
-            </p>
+            </motion.p>
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.4 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
             >
               <ScrollLink to="contact" smooth={true} className={styles.heroCta}>
                 Start Planning Your Event →
@@ -406,7 +399,9 @@ const Home = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                <FaPhone className={`${styles.inputIcon} ${styles.flipIcon}`} />
+                  <FaPhone
+                    className={`${styles.inputIcon} ${styles.flipIcon}`}
+                  />
                   <input
                     type="tel"
                     name="phone"
@@ -434,7 +429,6 @@ const Home = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   disabled={isSending}
-                  // disabled={isSending || cooldownRemaining > 0}
                   className={styles.submitButton}
                 >
                   {isSending ? (
@@ -442,23 +436,7 @@ const Home = () => {
                   ) : (
                     "Send Message"
                   )}
-                  {/* 
-                    : cooldownRemaining > 0 ? (
-                    `Resend in ${formatCooldown(cooldownRemaining)}`
-                  ) */}
                 </motion.button>
-
-                {statusMessage && (
-                  <p className={styles.statusMessage}>
-                    {statusMessage.includes("supported providers") ? (
-                      <span style={{ color: "#ff4444" }}>
-                        ⚠️ {statusMessage}
-                      </span>
-                    ) : (
-                      statusMessage
-                    )}
-                  </p>
-                )}
               </motion.form>
 
               <motion.div

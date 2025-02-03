@@ -1,15 +1,17 @@
 :root {
     /* Color Scheme */
-    --primary-color: #D2A679;
-    --secondary-color: #A9865E;
+    /* --primary-color: #D2A679; */
+    --primary-color: #2e6997;
+    --secondary-color: #e67e22;
+  --hover-color: #23527a;
   --background-color: #FAF7F2;
     --text-color: #333333;
-    --hover-color: #C09670;
     --white: #FFFFFF;
   
     /* Typography */
-    --font-primary: 'Playfair Display', serif;
+    --font-primary: 'Poppins', serif;
     --font-secondary: 'Montserrat', sans-serif; 
+    --font-title: 'Playfair Display', serif;
     
     /* Spacing */
     --section-padding: 5rem 0;

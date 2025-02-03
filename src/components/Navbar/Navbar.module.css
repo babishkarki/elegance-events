@@ -23,7 +23,7 @@
 }
 
 .logo {
-  font-family: var(--font-primary);
+  font-family: var(--font-title);
   text-decoration: none;
   display: flex;
   flex-direction: column;

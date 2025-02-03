@@ -4,6 +4,13 @@
     padding: 3rem 0 0;
     margin-top: auto;
   }
+
+  .logo {
+    width: 120px;
+    height: auto;
+    margin-left: 25px;
+     /* Makes logo white if needed */
+  }
   
   .container {
     display: grid;
@@ -80,6 +87,10 @@
   @media (max-width: 768px) {
     .container{
       gap: 0rem;
+    }
+
+    .logo{
+      margin-left: 0;
     }
 
     .section {
