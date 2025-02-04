@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import ServiceTemplate from './ServiceTemplate';
 
 const Birthdays = () => {
-      useEffect(() => {
-        window.scrollTo(0, 0);
-      }, []);
+  useLayoutEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
   const serviceData = {
     title: "Birthday Celebrations",
     description: "Make every birthday unforgettable with our themed decorations, custom setups, and magical atmosphere creation.",
@@ -22,12 +23,17 @@ const Birthdays = () => {
       {
         title: "Basic Package",
         price: "$0",
-        features: ["Basic decoration", "Balloon setup", "2-hour setup"]
+        features: ["50 pcs Helium Balloons", "30 pcs Floor Balloons", "Foil Balloons", "Letter Foil set"]
+      },
+      {
+        title: "Standard Package",
+        price: "$0",
+        features: ["2 pcs Curtain Foils", "Balloon Garland", "Tassels", "Letter Foil Set"]
       },
       {
         title: "Premium Package",
         price: "$0",
-        features: ["Full theme decoration", "Interactive elements", "4-hour setup"]
+        features: ["Customized Arcylic Name", "Cutout Balloon Garland", "cake topper", "Number Foil Set", "4 pcs curtain Foil"]
       }
     ],
     testimonials: [

@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaUser, FaEnvelope, FaCommentDots, FaPhone } from "react-icons/fa";
+import {
+  FaUser,
+  FaEnvelope,
+  FaCommentDots,
+  FaPhone,
+  FaArrowUp,
+} from "react-icons/fa";
 import { Element as ScrollElement } from "react-scroll";
 import { Typewriter } from "react-simple-typewriter";
 import Lightbox from "../LightBox/LightBox";
@@ -51,6 +57,18 @@ const Home = () => {
     type: "", // 'success' or 'error'
     message: "",
   });
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -468,11 +486,25 @@ const Home = () => {
       </ScrollElement>
 
       {/* Back To Top Link */}
-      <div className={styles.backToTop}>
-        <ScrollLink to="hero" smooth={true}>
-          ↑ Back to Top
+      <motion.div
+        className={styles.backToTop}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          opacity: isScrolled ? 1 : 0,
+          y: isScrolled ? 0 : 20,
+        }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
+        <ScrollLink
+          to="hero"
+          smooth={true}
+          duration={800}
+          className={styles.backToTopButton}
+          aria-label="Back to top"
+        >
+          <FaArrowUp className={styles.arrowIcon} />
         </ScrollLink>
-      </div>
+      </motion.div>
     </div>
   );
 };

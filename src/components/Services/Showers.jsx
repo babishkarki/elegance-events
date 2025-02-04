@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import ServiceTemplate from './ServiceTemplate';
 
 const Showers = () => {
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  useLayoutEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
   const serviceData = {
     title: "Baby & Bridal Showers",
     description: "Celebrate life's beautiful transitions with themed showers and personalized decor.",

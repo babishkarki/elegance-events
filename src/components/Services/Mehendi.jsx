@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import ServiceTemplate from './ServiceTemplate';
 
 const Mehendi = () => {
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  useLayoutEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
   const serviceData = {
     title: "Mehendi & Haldi Ceremonies",
     description: "Traditional yet modern decor for your pre-wedding rituals, blending cultural authenticity with contemporary aesthetics.",

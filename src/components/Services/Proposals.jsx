@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import ServiceTemplate from './ServiceTemplate';
 
 const Proposals = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  useLayoutEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
   const serviceData = {
     title: "Surprise Proposals",

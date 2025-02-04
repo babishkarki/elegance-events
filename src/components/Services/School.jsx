@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import ServiceTemplate from './ServiceTemplate';
 
 const School = () => {
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  useLayoutEffect(() => {
+    // Scroll to the top of the page
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
   const serviceData = {
     title: "School & College Events",
     description: "Dynamic decor solutions for academic events, competitions, and cultural festivals.",
