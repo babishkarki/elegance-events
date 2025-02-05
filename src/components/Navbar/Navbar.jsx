@@ -126,7 +126,21 @@ const Navbar = () => {
   return (
     <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}>
       <div className={styles.container}>
-        <RouterLink to="/" className={styles.logo}>
+        <RouterLink
+          to="/"
+          className={styles.logo}
+          onClick={(e) => {
+            // If already on home page, scroll to top
+            if (location.pathname === "/") {
+              e.preventDefault();
+              scroller.scrollTo("hero", {
+                smooth: true,
+                duration: 500,
+                offset: 0,
+              });
+            }
+          }}
+        >
           <span className={styles.logoPrimary}>Elegance</span>
           <span className={styles.logoSecondary}>Events</span>
         </RouterLink>

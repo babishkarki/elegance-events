@@ -40,7 +40,7 @@ const services = [
     path: "/services/mehendi",
   },
   {
-    title: "Coroprate Events",
+    title: "Corporate Events",
     img: "/assets/school-events.jpg",
     path: "/services/school",
   },
@@ -60,6 +60,7 @@ const Home = () => {
   });
 
   const [isScrolled, setIsScrolled] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -206,14 +207,14 @@ const Home = () => {
   const [showOffer, setShowOffer] = useState(false);
 
   useEffect(() => {
-    const hasSeenOffer = localStorage.getItem("hasSeenOffer");
+    const hasSeenOffer = sessionStorage.getItem("hasSeenOfferSession");
     const timer = setTimeout(() => {
       if (!hasSeenOffer) {
         setShowOffer(true);
-        localStorage.setItem("hasSeenOffer", "true");
+        sessionStorage.setItem("hasSeenOfferSession", "true");
       }
-    }, 3000); // Show after 3 seconds
-
+    }, 3000);
+  
     return () => clearTimeout(timer);
   }, []);
 
@@ -228,7 +229,7 @@ const Home = () => {
           />
         )}
       </AnimatePresence>
-      
+
       {/* Offer Popup */}
       <AnimatePresence>
         {showOffer && <OfferPopup onClose={() => setShowOffer(false)} />}
