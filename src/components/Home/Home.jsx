@@ -15,6 +15,7 @@ import Lightbox from "../LightBox/LightBox";
 import emailjs from "@emailjs/browser";
 import styles from "./Home.module.css";
 import MessageModal from "../MessageModal/MessageModal";
+import OfferPopup from "../OfferPopup/OfferPopup";
 import "../../styles/theme.css";
 
 const services = [
@@ -202,6 +203,20 @@ const Home = () => {
     }),
   };
 
+  const [showOffer, setShowOffer] = useState(false);
+
+  useEffect(() => {
+    const hasSeenOffer = localStorage.getItem("hasSeenOffer");
+    const timer = setTimeout(() => {
+      if (!hasSeenOffer) {
+        setShowOffer(true);
+        localStorage.setItem("hasSeenOffer", "true");
+      }
+    }, 3000); // Show after 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className={styles.homeContainer}>
       {/* Lightbox for gallery images */}
@@ -212,6 +227,11 @@ const Home = () => {
             onClose={() => setSelectedImage(null)}
           />
         )}
+      </AnimatePresence>
+      
+      {/* Offer Popup */}
+      <AnimatePresence>
+        {showOffer && <OfferPopup onClose={() => setShowOffer(false)} />}
       </AnimatePresence>
 
       {/* Add Message Modal Here */}
