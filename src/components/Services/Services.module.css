@@ -1,162 +1,204 @@
 .serviceContainer {
-    padding: 2rem 0;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  /* Hero Section */
-  .heroSection {
-    text-align: center;
-    padding: 4rem 1rem;
-    background: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05));
-    border-radius: 15px;
-    margin-bottom: 3rem;
-  }
-  
+  padding: 2rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.heroSection {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05));
+  border-radius: 15px;
+  margin-bottom: 3rem;
+}
+
+.heroTitle {
+  font-size: 2.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.heroDescription {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+/* Features Grid */
+.featuresSection {
+  margin: 4rem 0;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.featureCard {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.featureIcon {
+  width: 50px;
+  height: 50px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/* Gallery Styles */
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.galleryItem {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.galleryItem img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+/* Packages Section */
+.packagesSection {
+  margin: 4rem 0;
+}
+
+.packagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.packageCard {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid var(--primary-color);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.packageFeatures {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.packageFeatures li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  color: var(--text-color);
+}
+
+/* Choose Plan Button */
+/* Choose Plan Button */
+.choosePlanButton {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.choosePlanButton:hover {
+  background: color-mix(in srgb, var(--primary-color) 80%, black);/* Darker shade of primary color */
+  box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+}
+
+.choosePlanButton::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(45deg) translate(-20%, 100%);
+  transition: all 0.5s ease;
+}
+
+.choosePlanButton:hover::after {
+  transform: rotate(45deg) translate(20%, -100%);
+}
+
+/* Testimonials */
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.testimonialCard {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.testimonialText {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.clientInfo {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .heroTitle {
-    font-size: 2.8rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
   }
-  
+
+  .serviceContainer {
+    padding: 2rem 1rem;
+  }
+
   .heroDescription {
-    font-size: 1.2rem;
-    color: var(--text-color);
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.6;
+    font-size: 1rem;
   }
   
-  .sectionTitle{
-    font-size: 2.5rem;
-    margin-top: 3rem;
+  .packagesGrid {
+    grid-template-columns: 1fr;
   }
-
-  /* Features Grid */
-  .featuresSection {
-    margin: 4rem 0;
-  }
-  
-  .featuresGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .featureCard {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .featureIcon {
-    width: 50px;
-    height: 50px;
-    background: var(--primary-color);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-  
-  /* Gallery Styles */
-  .galleryGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-  
-  .galleryItem {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-  
-  .galleryItem img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-  }
-  
-  /* Pricing Section */
-  .pricingCards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .pricingCard {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 12px;
-    border: 2px solid var(--primary-color);
-    text-align: center;
-  }
-  
-  .price {
-    font-size: 2.2rem;
-    color: var(--primary-color);
-    margin: 1rem 0;
-    font-weight: 700;
-  }
-  
-  .pricingFeatures {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0;
-  }
-  
-  .pricingFeatures li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-  }
-  
-  /* Testimonials */
-  .testimonialsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .testimonialCard {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 12px;
-    border-left: 4px solid var(--primary-color);
-  }
-  
-  .testimonialText {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--text-color);
-  }
-  
-  .clientInfo {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #eee;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .heroTitle {
-      font-size: 2rem;
-    }
-
-    .serviceContainer{
-      padding: 2rem 1rem;
-    }
-  
-    .heroDescription {
-      font-size: 1rem;
-    }
-  }
+}

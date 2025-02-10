@@ -22,6 +22,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   }
   
+
   .modalIcon {
     margin-bottom: 1rem;
   }
@@ -68,3 +69,5 @@
     background: #dc3545;
     color: white;
   }
+
+  

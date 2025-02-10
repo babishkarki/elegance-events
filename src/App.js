@@ -9,7 +9,7 @@ import Birthday from './components/Services/Birthdays';
 import Mehendi from './components/Services/Mehendi';
 import Shower from './components/Services/Showers';
 import School from './components/Services/School';
-
+import BookingPage from './components/BookingPage/BookingPage';
 const Home = lazy(() => import('./components/Home/Home'));
 const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 function ScrollToTop() {
@@ -37,6 +37,7 @@ function App() {
               <Route path="/services/mehendi" element={<Mehendi />} />
               <Route path="/services/showers" element={<Shower />} />
               <Route path="/services/school" element={<School />} />
+              <Route path="/booking" element={<BookingPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

@@ -349,6 +349,10 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .sectionContainer {
+    width: 100%;
+  }
+
   .contactContent {
     grid-template-columns: 1fr;
   }

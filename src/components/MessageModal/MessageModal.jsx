@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import styles from "./MessageModal.module.css"; // If using separate CSS module
-// OR use: import styles from "../../Home/Home.module.css"; 
+import styles from "./MessageModal.module.css";
 
 const MessageModal = ({ type, message, onClose }) => {
   return (

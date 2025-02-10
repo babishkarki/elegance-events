@@ -1,33 +1,45 @@
-import { motion } from 'framer-motion';
-import styles from './Services.module.css';
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import styles from "./Services.module.css";
 
-const ServiceTemplate = ({ 
-  title, 
-  description, 
-  images, 
-  features, 
+const ServiceTemplate = ({
+  title,
+  description,
+  images,
+  features,
   pricing,
-  testimonials 
+  testimonials,
 }) => {
+  const navigate = useNavigate();
+  
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 }
-    }
+      transition: { staggerChildren: 0.2 },
+    },
   };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
-      transition: { type: 'spring', stiffness: 120 }
-    }
+      transition: { type: "spring", stiffness: 120 },
+    },
+  };
+
+  const handlePackageSelect = (plan) => {
+    navigate("/booking", {
+      state: {
+        service: title,
+        package: plan.title,
+      },
+    });
   };
 
   return (
-    <motion.div 
+    <motion.div
       className={styles.serviceContainer}
       initial="hidden"
       animate="visible"
@@ -40,11 +52,14 @@ const ServiceTemplate = ({
       </motion.section>
 
       {/* Features Grid */}
-      <motion.section className={styles.featuresSection} variants={itemVariants}>
+      <motion.section
+        className={styles.featuresSection}
+        variants={itemVariants}
+      >
         <h2 className={styles.sectionTitle}>Key Features</h2>
         <div className={styles.featuresGrid}>
           {features.map((feature, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               className={styles.featureCard}
               variants={itemVariants}
@@ -67,11 +82,11 @@ const ServiceTemplate = ({
               key={index}
               className={styles.galleryItem}
               whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 300 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              <img 
-                src={process.env.PUBLIC_URL + image} 
-                alt={`${title} example ${index + 1}`} 
+              <img
+                src={process.env.PUBLIC_URL + image}
+                alt={`${title} example ${index + 1}`}
                 loading="lazy"
               />
             </motion.div>
@@ -79,23 +94,32 @@ const ServiceTemplate = ({
         </div>
       </motion.section>
 
-      {/* Pricing Section */}
-      <motion.section className={styles.pricingSection} variants={itemVariants}>
-        <h2 className={styles.sectionTitle}>Packages & Pricing</h2>
-        <div className={styles.pricingCards}>
+      {/* Packages Section */}
+      <motion.section className={styles.packagesSection} variants={itemVariants}>
+        <h2 className={styles.sectionTitle}>Packages</h2>
+        <div className={styles.packagesGrid}>
           {pricing.map((plan, index) => (
-            <motion.div 
+            <motion.div
               key={index}
-              className={styles.pricingCard}
+              className={styles.packageCard}
               whileHover={{ scale: 1.02 }}
             >
-              <h3>{plan.title}</h3>
-              <div className={styles.price}>{plan.price}</div>
-              <ul className={styles.pricingFeatures}>
+              <h3 className={styles.packageTitle}>{plan.title}</h3>
+              <ul className={styles.packageFeatures}>
                 {plan.features.map((feature, fIndex) => (
-                  <li key={fIndex}>{feature}</li>
+                  <li key={fIndex} className={styles.featureItem}>
+                    {feature}
+                  </li>
                 ))}
               </ul>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={styles.choosePlanButton}
+                onClick={() => handlePackageSelect(plan)}
+              >
+                Choose Plan
+              </motion.button>
             </motion.div>
           ))}
         </div>
@@ -103,11 +127,14 @@ const ServiceTemplate = ({
 
       {/* Testimonials */}
       {testimonials && (
-        <motion.section className={styles.testimonialsSection} variants={itemVariants}>
+        <motion.section
+          className={styles.testimonialsSection}
+          variants={itemVariants}
+        >
           <h2 className={styles.sectionTitle}>Client Experiences</h2>
           <div className={styles.testimonialsGrid}>
             {testimonials.map((testimonial, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className={styles.testimonialCard}
                 whileHover={{ y: -5 }}
