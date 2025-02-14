@@ -1,0 +1,28 @@
+# Enable the RewriteEngine
+RewriteEngine On
+
+# Force HTTPS Redirect (301)
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Handle React Router (SPA Routing) - Redirect all requests to index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [QSA,L]
+
+# Custom 404 Error Page
+ErrorDocument 404 /404.html
+
+# Cache-Control for Static Assets (images, js, css, etc.)
+<FilesMatch "\.(jpg|jpeg|png|gif|js|css|ico|woff|woff2|ttf)$">
+    Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
+
+# Redirect old URLs (Optional)
+Redirect 301 /old-page.html /new-page.html
+
+# Disable Directory Listing
+Options -Indexes
+
+# Enable Gzip Compression for Performance
+AddOutputFilterByType DEFLATE text/plain text/html text/css application/javascript application/json
