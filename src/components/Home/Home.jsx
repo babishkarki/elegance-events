@@ -20,29 +20,35 @@ import "../../styles/theme.css";
 
 const services = [
   {
-    title: "Birthday Decorations",
+    title: "Birthday Party Decorations",
     img: "/assets/birthday.png",
     path: "/services/birthdays",
+    alt:"Customized birthday decorations with balloons and banners"
   },
   {
     title: "Baby & Bridal Showers",
     img: "/assets/babyshower.png",
     path: "/services/showers",
+    alt:"Custom baby shower decorations with pastel colors, balloons, and themed banners"
   },
   {
-    title: "Surprise Proposals",
+    title: "Surprise Proposal Decorations",
     img: "/assets/surprise-proposal.jpg",
     path: "/services/proposals",
+    alt:"Surprise Proposal Decorations"
   },
   {
-    title: "Mehendi & Haldi Ceremonies",
+    title: "Mehendi Ceremony Styling",
     img: "/assets/mehendi.jpg",
     path: "/services/mehendi",
+    alt:"Guests enjoying a beautifully decorated mehendi ceremony with colorful designs and rustic decor"
   },
   {
     title: "Corporate Events",
     img: "/assets/school-events.jpg",
     path: "/services/school",
+     alt:"Corporate Events"
+    
   },
 ];
 
@@ -257,7 +263,7 @@ const Home = () => {
           <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>
               <Typewriter
-                words={["Creating Moments of Elegance"]}
+                words={["Birthday and Event Decorations & Creating Moments of Elegance"]}
                 typeSpeed={80}
                 deleteSpeed={0}
                 cursor={false}
@@ -295,7 +301,7 @@ const Home = () => {
           variants={sectionVariants}
         >
           <div className={styles.sectionContainer}>
-            <h2 className={styles.sectionTitle}>Our Signature Services</h2>
+            <h2 className={styles.sectionTitle}>Our Event Decoration Services</h2>
             <div className={styles.servicesGrid}>
               {services.map((service, index) => (
                 <motion.article
@@ -310,7 +316,7 @@ const Home = () => {
                   <div className={styles.cardImage}>
                     <img
                       src={process.env.PUBLIC_URL + service.img}
-                      alt={service.title}
+                      alt={service.alt}
                       loading="lazy"
                     />
                   </div>
