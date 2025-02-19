@@ -1,3 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /private/
+Sitemap:https://babishkarki.github.io/elegance-events//sitemap.xml
