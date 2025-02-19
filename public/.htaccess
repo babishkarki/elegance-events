@@ -18,6 +18,13 @@ ErrorDocument 404 /404.html
     Header set Cache-Control "max-age=31536000, public"
 </FilesMatch>
 
+
+<Files "robots.txt">
+  Order allow,deny
+  Allow from all
+</Files>
+
+
 # Redirect old URLs (Optional)
 Redirect 301 /old-page.html /new-page.html
 
